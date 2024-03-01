@@ -5,11 +5,13 @@ class GameState():
             ["bp", "bp", "bp", "bp", "bp", "bp", "bp", "bp"],
             ["--", "--", "--", "--", "--", "--", "--", "--"],
             ["--", "--", "--", "--", "--", "--", "--", "--"],
-            ["--", "--", "--", "--", "--", "--", "--", "--"],
+            ["--", "--", "wR", "--", "--", "bB", "--", "--"],
             ["--", "--", "--", "--", "--", "--", "--", "--"],
             ["wp", "wp", "wp", "wp", "wp", "wp", "wp", "wp"],
             ["wR", "wN", "wB", "wQ", "wK", "wB", "wN", "wR"]            
         ]
+        self.moveFuncitons = {'p': self.getPawnMoves, 'R': self.getRookMoves, 'N': self.getKnightMoves,
+                              'B': self.getBishopMoves, 'Q': self.getQueenMoves, 'K': self.getKingMoves}
         
         self.WhiteToMove = True
         self.moveLog = []
@@ -44,10 +46,7 @@ class GameState():
                 turn = self.board[r][c][0]
                 if (turn == 'w' and self.WhiteToMove) or (turn == 'b' and not self.WhiteToMove):
                     piece = self.board[r][c][1]
-                    if piece == 'p':
-                        self.getPawnMoves(r, c, moves)
-                    elif piece == 'R':
-                        self.getRookMoves(r, c, moves)
+                    self.moveFuncitons[piece](r, c, moves) # calls the appropriate move function based on piece type
         return moves
     '''
     get all the pawn moves for the pawn located at row, col and add the moves to the list
@@ -77,6 +76,18 @@ class GameState():
                     moves.append(Move((r,c), (r+1, c+1), self.board))               
     
     def getRookMoves(self, r, c, moves):
+        pass
+
+    def getKnightMoves(self, r, c, moves):
+        pass
+    
+    def getBishopMoves(self, r, c, moves):
+        pass
+
+    def getQueenMoves(self, r, c, moves):
+        pass
+
+    def getKingMoves(self, r, c, moves):
         pass
                         
         
