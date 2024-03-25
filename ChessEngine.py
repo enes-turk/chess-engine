@@ -219,8 +219,14 @@ class GameState():
                 endPiece = self.board[endRow][endCol]
                 if endPiece[0] != allyColor:
                     moves.append(Move((r, c), (endRow, endCol), self.board))
-                        
-        
+
+# class CastleRights():
+#     def __init__(self, wks, bks, wqs, bqs):
+#         self.wks = wks
+#         self.bks = bks
+#         self.wqs = wqs
+#         self.bqs = bqs
+
 class Move():
     ranksToRows = {"1": 7, "2": 6, "3": 5, "4": 4,
                    "5": 3, "6": 2, "7": 1, "8": 0}
