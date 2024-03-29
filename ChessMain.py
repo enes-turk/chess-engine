@@ -60,10 +60,16 @@ def main():
                             playerClicks = [sqSelected]
             # key handlers
             elif e.type == p.KEYDOWN: # undo a move
-                if e.key == p.K_z:
+                if e.key == p.K_z and (playerOne + playerTwo) == 1:
+                    gs.undoMove(); gs.undoMove()
+                    moveMade = True
+                    animate = False
+                    gameOver = False
+                elif e.key == p.K_z:
                     gs.undoMove()
                     moveMade = True
                     animate = False
+                    gameOver = False
                 if e.key == p.K_r: # reset the board
                     gs = ChessEngine.GameState()
                     validMoves = gs.getValidMoves()
@@ -71,11 +77,11 @@ def main():
                     playerClicks = []
                     moveMade = False
                     animate = False
-                    gameOver = False           
+                    gameOver = False          
         
         # AI move finder logic
         if not gameOver and not humanTurn:
-            AIMove = SmartMoveFinder.findBestMove(gs, validMoves)
+            AIMove = SmartMoveFinder.findBestMoveMinMax(gs, validMoves)
             if AIMove == None:
                 AIMove = SmartMoveFinder.findRandomMove(validMoves)
             gs.makeMove(AIMove)

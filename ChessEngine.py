@@ -100,7 +100,9 @@ class GameState():
                 else: # queenside
                     self.board[move.endRow][move.endCol-2] = self.board[move.endRow][move.endCol+1] # coppies the rook to the right of the king
                     self.board[move.endRow][move.endCol+1] = '--'
-    
+
+            self.checkmate = False; self.stalemate = False
+
     def updateCastleRights(self, move):
         if move.pieceMoved == 'wK':
             self.currentCastlingRight.wks = False
