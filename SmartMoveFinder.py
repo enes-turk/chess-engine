@@ -6,16 +6,17 @@ STALEMATE = 0
 DEPTH = 2
 
 
-
+'''
+Random Move AI
+'''
 def findRandomMove(validMoves):
     return validMoves[random.randint(0, len(validMoves)-1)]
-
 
 '''
 Find the best move based on material
 '''
 
-def findBestMove(gs, validMoves):
+def findBestMoveMinMaxNoRecursion(gs, validMoves):
     turnMultiplier = 1 if gs.whiteToMove else -1
     oppsMinMaxScore = CHECKMATE
     bestPlayerMove = None
@@ -51,17 +52,23 @@ def findBestMove(gs, validMoves):
 '''
 Helper method to call first recursive call
 '''
-def findBestMoveMinMax(gs, validMoves):
-    global nextMove
-    findMoveMinMax(gs, validMoves, DEPTH, gs.whiteToMove)
-    
+def findBestMove(gs, validMoves):
+    global nextMove, counter
+    nextMove = None
+    random.shuffle(validMoves)
+    counter = 0
+    # findMoveMinMax(gs, validMoves, DEPTH, gs.whiteToMove)
+    findMoveNegaMaxAlphaBeta(gs, validMoves, DEPTH,-CHECKMATE, CHECKMATE, 1 if gs.whiteToMove else -1)
+    print(counter)
     return nextMove
 
+'''
+Min-Max Algorithm Recursive
+'''
 def findMoveMinMax(gs, validMoves, depth, whiteToMove):
     global nextMove
     if depth == 0:
         return scoreMaterial(gs.board)
-    random.shuffle(validMoves)
     if whiteToMove:
         maxScore = -CHECKMATE
         for move in validMoves:
@@ -86,15 +93,57 @@ def findMoveMinMax(gs, validMoves, depth, whiteToMove):
                     nextMove = move
             gs.undoMove()
         return minScore
-    
-    
-   
-   
-   
+
 '''
-A poisitive score is good for white, a negative score is bad for black
+NegaMax Algorithm Recursive
 '''
-   
+    
+def findMoveNegaMax(gs, validMoves, depth, turnMultiplier):
+    global nextMove, counter
+    counter += 1
+    if depth == 0:
+        return turnMultiplier * scoreBoard(gs)
+    
+    maxScore = -CHECKMATE
+    for move in validMoves:
+        gs.makeMove(move)
+        nextMoves = gs.getValidMoves()
+        score = -findMoveNegaMax(gs, nextMoves, depth-1, -turnMultiplier)
+        # score = max(score, maxScore) # Python has built-in max function. Rather than doing below it's somewhat usefull.
+        if score > maxScore:
+            maxScore = score
+            if depth == DEPTH:
+                nextMove = move
+        gs.undoMove()
+    return maxScore
+
+def findMoveNegaMaxAlphaBeta(gs, validMoves, depth, alpha, beta, turnMultiplier):
+    global nextMove, counter
+    counter += 1
+    if depth == 0:
+        return turnMultiplier * scoreBoard(gs)
+    
+    # move ordering implement later
+    maxScore = -CHECKMATE
+    for move in validMoves:
+        gs.makeMove(move)
+        nextMoves = gs.getValidMoves()
+        score = -findMoveNegaMaxAlphaBeta(gs, nextMoves, depth-1,-beta, -alpha, -turnMultiplier)
+        # score = max(score, maxScore) # Python has built-in max function. Rather than doing below it's somewhat usefull.
+        if score > maxScore:
+            maxScore = score
+            if depth == DEPTH:
+                nextMove = move
+        gs.undoMove()
+        if maxScore > alpha: # pruning happens
+            alpha = maxScore
+        if alpha >= beta:
+            break 
+    return maxScore
+
+'''
+Scoring board with a poisitive score is good for white, a negative score is bad for black
+'''
 def scoreBoard(gs):
     if gs.checkmate:
         if gs.whiteToMove:
@@ -113,9 +162,7 @@ def scoreBoard(gs):
                 score -= pieceScore[square[1]]
     
     return score
-    
 
- 
 '''
 Score the board based on material
 '''
