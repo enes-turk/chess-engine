@@ -1,5 +1,6 @@
 import pygame as p
 import ChessEngine, SmartMoveFinder
+from multiprocessing import Process, Queue
 
 WIDTH = HEIGHT = 512
 MOVE_LOG_PANEL_WIDTH = 250
@@ -9,6 +10,7 @@ SQ_SIZE = HEIGHT // DIMENSION
 MAX_FPS = 15
 IMAGES = {}
 
+p.init()
 
 def loadImages():
     pieces = ["wp","wB","wR","wN","wQ","wK",
@@ -17,7 +19,6 @@ def loadImages():
         IMAGES[piece] = p.transform.scale(p.image.load("images/{}.png".format(piece)), (SQ_SIZE, SQ_SIZE))
         
 def main():
-    p.init()
     screen = p.display.set_mode((WIDTH + MOVE_LOG_PANEL_WIDTH, HEIGHT))
     clock = p.time.Clock()
     screen.fill(p.Color("white"))
@@ -32,7 +33,10 @@ def main():
     playerClicks = [] # keep track of player clicks (two tuples: [(7, 4)])
     gameOver = False
     playerOne = True # If a human is playing white, then this will be True. If an AI playing, then this will be False
-    playerTwo = True # If a human is playing black, then this will be True. If an AI playing, then this will be False
+    playerTwo = False # If a human is playing black, then this will be True. If an AI playing, then this will be False
+    AIThinking = False
+    moveFinderProcess = None
+    moveUndone = False
     while running:
         humanTurn = (gs.whiteToMove and playerOne) or (not gs.whiteToMove and playerTwo)
         for e in p.event.get():
@@ -40,16 +44,17 @@ def main():
                 running = False
             # mouse handlers
             elif e.type == p.MOUSEBUTTONDOWN:
-                if not gameOver and humanTurn:
-                    location = p.mouse.get_pos()
+                if not gameOver:
+                    location = p.mouse.get_pos() # (x, y) location of mouse
                     col = location[0]//SQ_SIZE
                     row = location[1]//SQ_SIZE
                     if sqSelected == (row, col) or col >= 8: # user clicked the same square twice or clicked outside the board(simple but a life saver)
                         sqSelected = () # deselect
+                        playerClicks = []
                     else:
                         sqSelected = (row, col)
-                        playerClicks.append(sqSelected)
-                    if len(playerClicks) == 2: # after second click
+                        playerClicks.append(sqSelected) # append for both 1st and 2nd clickskk
+                    if len(playerClicks) == 2 and humanTurn: # after second click
                         move = ChessEngine.Move(playerClicks[0], playerClicks[1], gs.board) # IMPORTANT: we call Move by the name move
                         print(move.getChessNotation()) # not FIDE notation just for the testing purposes
                         for i in range(len(validMoves)):
@@ -68,6 +73,10 @@ def main():
                     moveMade = True
                     animate = False
                     gameOver = False
+                    if AIThinking: # without this if you undone a move AI saves the response of a move then makes the same move after you make a different one
+                        moveFinderProcess.terminate()
+                        AIThinking = False
+                    moveUndone = True
                 elif e.key == p.K_z:
                     gs.undoMove()
                     moveMade = True
@@ -80,16 +89,29 @@ def main():
                     playerClicks = []
                     moveMade = False
                     animate = False
-                    gameOver = False          
+                    gameOver = False        
+                    if AIThinking:
+                        moveFinderProcess.terminate()
+                        AIThinking = False
+                    moveUndone = True  
         
         # AI move finder logic
-        if not gameOver and not humanTurn:
-            AIMove = SmartMoveFinder.findBestMove(gs, validMoves)
-            if AIMove == None:
-                AIMove = SmartMoveFinder.findRandomMove(validMoves) # it actually should'nt use this.
-            gs.makeMove(AIMove)
-            moveMade = True
-            animate = True
+        if not gameOver and not humanTurn and not moveUndone:
+            if not AIThinking:
+                AIThinking = True
+                print('Thinking...')
+                returnQueue = Queue() # used to pass data between threads
+                moveFinderProcess = Process(target=SmartMoveFinder.findBestMove, args=(gs, validMoves, returnQueue))
+                moveFinderProcess.start() # call findBestMove(gs, validMoves, returnQueue)
+            if not moveFinderProcess.is_alive():
+                print('Done Thinking')
+                AIMove = returnQueue.get()
+                if AIMove == None:
+                    AIMove = SmartMoveFinder.findRandomMove(validMoves) # it actually should'nt use this.
+                gs.makeMove(AIMove)
+                moveMade = True
+                animate = True
+                AIThinking = False
             
         # animating the pieces       
         if moveMade:
@@ -97,7 +119,8 @@ def main():
                 animateMove(gs.moveLog[-1], screen, gs.board, clock)
             validMoves = gs.getValidMoves()
             moveMade = False    
-            animate = False   
+            animate = False
+            moveUndone = False
         
         # Calling what is infront of us as graphics      
         drawGameState(screen, gs, validMoves, sqSelected, moveLogFont)
