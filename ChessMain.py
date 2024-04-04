@@ -10,8 +10,6 @@ SQ_SIZE = HEIGHT // DIMENSION
 MAX_FPS = 15
 IMAGES = {}
 
-p.init()
-
 def loadImages():
     pieces = ["wp","wB","wR","wN","wQ","wK",
               "bp","bB","bR","bN","bQ","bK"]
@@ -19,6 +17,7 @@ def loadImages():
         IMAGES[piece] = p.transform.scale(p.image.load("images/{}.png".format(piece)), (SQ_SIZE, SQ_SIZE))
         
 def main():
+    p.init()
     screen = p.display.set_mode((WIDTH + MOVE_LOG_PANEL_WIDTH, HEIGHT))
     clock = p.time.Clock()
     screen.fill(p.Color("white"))
