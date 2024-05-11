@@ -12,7 +12,7 @@ Python was used only in this project. Pygame was the primary library to create g
 
 The game can be played as PvP or PvE against a AI bot also you can watch bots playing to each other if you really one to. 
 
-![present_1](/readme_assets/presentation_1.gif){:width="100px"}
+<img src="path_to_your_gif.gif" alt="Alt text" style="max-width:100%;">
 
 ### Functionaltites
 
