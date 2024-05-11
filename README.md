@@ -1,32 +1,43 @@
 # Chess Engine and AI
 
-This personal project meant to combine my ambition on chess and desire to learn object oriented programming.
+This personal project combines my passion for chess with my desire to learn object-oriented programming.
 
 # Tools Utilized
 
-Python was used only in this project. Pygame was the primary library to create gamestates to phiscally intereact with the game.
+Python was the sole language used in this project, with Pygame serving as the primary library for creating game states to physically interact with the game board.
 
 # The Engine
 
-### Game
+### Board
 
-The game can be played as PvP or PvE against a AI bot also you can watch bots playing to each other if you really one to. 
+This chess engine allows players to engage in player versus player (PvP) matches or challenge an AI bot. Additionally, it offers the option to spectate matches between AI opponents. As you can see on the side of the board, we have a game log screen using professional chess notations to follow what has been done in the match.
 
-<img src="path_to_your_gif.gif" alt="Alt text" style="max-width:100%;">
+<img src="/readme_assets/presentation_1.gif" alt="present_1" width="70%">
 
-### Functionaltites
+### **Functionalities**
 
-Every functionaly needed by the centruies old game chess can be found here.
+Every functionality required by the centuries-old game of chess can be found within this engine.
 
 #### Undo Moves
-You can undo moves, if you did any rookie mistakes.
-![present_2](/readme_assets/presentation_2.gif){:width="100px"}
+
+Mistakes happen, but fear not! You can undo moves to rectify any rookie errors. The log also gets updated to the current state.
+
+<img src="/readme_assets/presentation_2.gif" alt="present_2" width="70%">
+
 #### Castling
-You can castle both sides.
-![present_3](/readme_assets/presentation_3.gif){:width="100px"}
-#### Unpassant
-The unpassant a complex rule of chess has been integrated to game.
-![present_4](/readme_assets/presentation_4.gif){:width="100px"}
+
+Seize the opportunity to fortify your king's position through castling maneuvers, available on both flanks of the board.
+
+<img src="/readme_assets/presentation_3.gif" alt="present_3" width="70%">
+
+#### En Passant
+
+Embracing the complexity of chess, the en passant rule has been seamlessly integrated into the game mechanics.
+
+<img src="/readme_assets/presentation_4.gif" alt="present_4" width="70%">
+
 #### Checkmate, Stalemate
-And finally the final blow the checkmate.
-![present_5](/readme_assets/presentation_5.gif){:width="100px"}
+
+And in the finale, you can be the one to deliver the final blow with a checkmate.
+
+<img src="/readme_assets/presentation_5.gif" alt="present_5" width="70%">
