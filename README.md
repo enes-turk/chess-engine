@@ -1,6 +1,8 @@
 # Chess Engine and AI
 
-This personal project merges my passion for chess with my eagerness to delve into object-oriented programming.
+This personal project merges my passion for chess with my want for learning object-oriented programming.
+
+This project wouldn't be possible without Eddie Sharick's lectures. Special thanks to him.
 
 # Tools Utilized
 
