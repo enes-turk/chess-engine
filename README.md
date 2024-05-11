@@ -2,7 +2,8 @@
 
 This personal project merges my passion for chess with my want for learning object-oriented programming.
 
-This project wouldn't be possible without Eddie Sharick's lectures. Special thanks to him.
+Special thanks to Eddie Sharick. Altough coming up with some improvements on my own this project wouldn't be possible without following his series.
+[Eddie's Channel](https://www.youtube.com/channel/UCaEohRz5bPHywGBwmR18Qww)
 
 # Tools Utilized
 
