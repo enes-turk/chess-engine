@@ -115,7 +115,7 @@ def findBestMoveMinMaxNoRecursion(gs, validMoves):
     return bestPlayerMove
 
 '''
-Helper method to call first recursive call
+--> This is ultimate algo that I used. <-- Helper method to call first recursive call
 '''
 def findBestMove(gs, validMoves, returnQueue):
     global nextMove, counter
@@ -162,8 +162,7 @@ def findMoveMinMax(gs, validMoves, depth, whiteToMove):
 
 '''
 NegaMax Algorithm Recursive
-'''
-    
+''' 
 def findMoveNegaMax(gs, validMoves, depth, turnMultiplier):
     global nextMove, counter
     counter += 1
@@ -189,7 +188,7 @@ def findMoveNegaMaxAlphaBeta(gs, validMoves, depth, alpha, beta, turnMultiplier)
     if depth == 0:
         return turnMultiplier * scoreBoard(gs)
     
-    # move ordering implement later
+    # TO-DO: move ordering implement later
     maxScore = -CHECKMATE
     for move in validMoves:
         gs.makeMove(move)
