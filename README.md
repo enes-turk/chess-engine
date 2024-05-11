@@ -1,26 +1,29 @@
 # Chess Engine and AI
 
-This personal project combines my passion for chess with my desire to learn object-oriented programming.
+This personal project merges my passion for chess with my eagerness to delve into object-oriented programming.
 
 # Tools Utilized
 
-Python was the sole language used in this project, with Pygame serving as the primary library for creating game states to physically interact with the game board.
+Python was the sole language utilized in this project, with Pygame serving as the primary library for constructing game states to interact with the game board.
 
 # The Engine
 
 ### Board
 
-This chess engine allows players to engage in player versus player (PvP) matches or challenge an AI bot. Additionally, it offers the option to spectate matches between AI opponents. As you can see on the side of the board, we have a game log screen using professional chess notations to follow what has been done in the match.
+- This chess engine facilitates player versus player (PvP) matches or challenges against an AI opponent. Additionally, it provides the option to spectate matches between AI opponents.
+- Smooth animations have been implemented to enhance immersion.
+- Illuminated squares have been introduced to offer visual cues regarding valid piece movements.
+- On the side of the board, a game log screen using professional chess notations allows players to track the progression of the match.
 
 <img src="/readme_assets/presentation_1.gif" alt="present_1" width="70%">
 
 ### **Functionalities**
 
-Every functionality required by the centuries-old game of chess can be found within this engine.
+Every essential functionality of the centuries-old game of chess is embedded within this engine.
 
 #### Undo Moves
 
-Mistakes happen, but fear not! You can undo moves to rectify any rookie errors. The log also gets updated to the current state.
+Mistakes happen, but fear not! You can undo moves to rectify any rookie errors. The log also updates to reflect the current state.
 
 <img src="/readme_assets/presentation_2.gif" alt="present_2" width="70%">
 
@@ -41,3 +44,7 @@ Embracing the complexity of chess, the en passant rule has been seamlessly integ
 And in the finale, you can be the one to deliver the final blow with a checkmate.
 
 <img src="/readme_assets/presentation_5.gif" alt="present_5" width="70%">
+
+### Conclusion
+
+This chess engine and AI project represents not just a technical accomplishment but a testament to the enduring fascination and challenge of the game of chess. Through its features and functionalities, it opens up new avenues for players to explore and enjoy the game in both traditional and innovative ways.
