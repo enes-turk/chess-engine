@@ -51,7 +51,7 @@ And in the finale, you can be the one to deliver the final blow with a checkmate
 
 To enhance the AI's capabilities, numerous algorithms were implemented to simulate the decision-making process of a real player. Drawing inspiration from the famous chess engine like Stockfish, complex structures were devised to generate improved moves and optimize performance. Among the algorithms implemented (such as min-max, nega-max, recursive best, recursive min-max, and recursive nega-max), the recursive model for nega-max exhibited the best performance. By incorporating alpha-beta pruning, the algorithm dynamically evaluates the maximum and minimum available positions, further enhancing its efficiency and allowing for deeper search depths.
 
-The nega-max algorithm efficiently evaluates positions by calculating the maximum possible gain and minimum possible loss, enabling the engine to reach the optimal move swiftly. Depth was incorporated into the model to enhance move accuracy. Additionally, a hardcoded method was implemented to evaluate positions for specific pieces and squares, while not the optimal approach for a robust engine. However, it proved to be an effective approach in lower depths.
+The nega-max algorithm efficiently evaluates positions by calculating the maximum possible gain and minimum possible loss, enabling the engine to reach the optimal move swiftly. Depth was incorporated into the model to enhance move accuracy. Additionally, a hardcoded method was implemented to evaluate position signigicance for specific pieces and squares, while not the optimal approach for a robust engine. However, it proved to be an effective approach in lower depths.
 
 ```python
 def findMoveNegaMaxAlphaBeta(gs, validMoves, depth, alpha, beta, turnMultiplier):
@@ -60,13 +60,11 @@ def findMoveNegaMaxAlphaBeta(gs, validMoves, depth, alpha, beta, turnMultiplier)
     if depth == 0:
         return turnMultiplier * scoreBoard(gs)
     
-    # move ordering implement later
     maxScore = -CHECKMATE
     for move in validMoves:
         gs.makeMove(move)
         nextMoves = gs.getValidMoves()
         score = -findMoveNegaMaxAlphaBeta(gs, nextMoves, depth-1,-beta, -alpha, -turnMultiplier)
-        # score = max(score, maxScore) # Python has built-in max function. Rather than doing below it's somewhat useful.
         if score > maxScore:
             maxScore = score
             if depth == DEPTH:
@@ -83,4 +81,4 @@ def findMoveNegaMaxAlphaBeta(gs, validMoves, depth, alpha, beta, turnMultiplier)
 
 ### Conclusion
 
-This chess engine and AI project represents not just a technical accomplishment but a testament to the enduring fascination and challenge of the game of chess. Through its features and functionalities, it opens up new avenues for players to explore and enjoy the game in both traditional and innovative ways.
+This chess engine and AI project symbolizes more than just a technical acomplishment; it's a testament to the journey of learning object-oriented programming and bringing an idea to life. While the project may have areas for improvement and inefficiencies, they serve as milestones in the learning process. As I continue on this journey, I look forward to refining and enhancing my knowledge, embracing the lessons learned along the way.
