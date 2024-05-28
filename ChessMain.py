@@ -1,6 +1,8 @@
 import pygame as p
 import ChessEngine, SmartMoveFinder
 from multiprocessing import Process, Queue
+import os
+os.environ['PYGAME_HIDE_SUPPORT_PROMPT'] = "hide"
 
 WIDTH = HEIGHT = 512
 MOVE_LOG_PANEL_WIDTH = 250
